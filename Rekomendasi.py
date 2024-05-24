@@ -281,7 +281,7 @@ def home_tambah_barang ():
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
 # _____________________________________________________________PEGAWAI___________________________________________
-
+print('Masukkan fitur pegawai di sini')
 # _____________________________________________________________CUSTOMER__________________________________________
 print('masukkan fitur customer')
 # _____________________________________________________________HOME PAGE_________________________________________
