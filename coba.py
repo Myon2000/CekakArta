@@ -1,7 +1,6 @@
 import pandas as pd
 from tabulate import tabulate
 import os
-import random
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -27,28 +26,16 @@ def knapsack_makanan():
     uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
 
     items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-
-    # Group items by (price, weight) and select one item randomly from each group
-    grouped_items = {}
-    for item in items:
-        key = (item["price"], item["weight"])
-        if key not in grouped_items:
-            grouped_items[key] = []
-        grouped_items[key].append(item)
-
-    unique_items = [random.choice(group) for group in grouped_items.values()]
-    
     capacity = uang_customer
-    max_weight, selected_items = knapsack_01(unique_items, capacity)
+    max_weight, selected_items = knapsack_01(items, capacity)
 
     print(f"Berat maksimal dari pemilihan barang: {max_weight} gram")
+    
     print("Barang yang dipilih:")
-
-    # Create a table for the selected items
     table = [[item["name"], item["price"], item["weight"]] for item in selected_items]
     print(tabulate(table, headers=["Barang", "Harga (Rp)", "Berat (gram)"], tablefmt="grid"))
     
-    input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan")
+    print(input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan"))
 
 def knapsack_minuman():
     os.system('cls')
@@ -57,28 +44,16 @@ def knapsack_minuman():
     uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
 
     items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-
-    # Group items by (price, weight) and select one item randomly from each group
-    grouped_items = {}
-    for item in items:
-        key = (item["price"], item["weight"])
-        if key not in grouped_items:
-            grouped_items[key] = []
-        grouped_items[key].append(item)
-
-    unique_items = [random.choice(group) for group in grouped_items.values()]
-    
     capacity = uang_customer
-    max_weight, selected_items = knapsack_01(unique_items, capacity)
+    max_weight, selected_items = knapsack_01(items, capacity)
 
-    print(f"Berat maksimal dari pemilihan barang: {max_weight} ml")
+    print(f"Berat maksimal dari pemilihan barang: {max_weight} minuman")
     print("Barang yang dipilih:")
 
-    # Create a table for the selected items
     table = [[item["name"], item["price"], item["weight"]] for item in selected_items]
     print(tabulate(table, headers=["Barang", "Harga (Rp)", "Berat (ml)"], tablefmt="grid"))
     
-    input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan")
+    print(input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan"))
 
 def knapsack_01(items, capacity):
         n = len(items)
@@ -101,8 +76,6 @@ def knapsack_01(items, capacity):
                     included_items[i][w] = included_items[i - 1][w]
 
         return dp[n][capacity], included_items[n][capacity]
-
-
 
 
 
