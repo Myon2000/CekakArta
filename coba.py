@@ -27,19 +27,8 @@ def knapsack_makanan():
     uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
 
     items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-
-    # Group items by (price, weight) and select one item randomly from each group
-    grouped_items = {}
-    for item in items:
-        key = (item["price"], item["weight"])
-        if key not in grouped_items:
-            grouped_items[key] = []
-        grouped_items[key].append(item)
-
-    unique_items = [random.choice(group) for group in grouped_items.values()]
-    
     capacity = uang_customer
-    max_weight, selected_items = knapsack_01(unique_items, capacity)
+    max_weight, selected_items = knapsack_01(items, capacity)
 
     print(f"Berat maksimal dari pemilihan barang: {max_weight} gram")
     print("Barang yang dipilih:")
@@ -57,19 +46,8 @@ def knapsack_minuman():
     uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
 
     items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-
-    # Group items by (price, weight) and select one item randomly from each group
-    grouped_items = {}
-    for item in items:
-        key = (item["price"], item["weight"])
-        if key not in grouped_items:
-            grouped_items[key] = []
-        grouped_items[key].append(item)
-
-    unique_items = [random.choice(group) for group in grouped_items.values()]
-    
     capacity = uang_customer
-    max_weight, selected_items = knapsack_01(unique_items, capacity)
+    max_weight, selected_items = knapsack_01(items, capacity)
 
     print(f"Berat maksimal dari pemilihan barang: {max_weight} ml")
     print("Barang yang dipilih:")
