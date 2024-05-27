@@ -8,8 +8,12 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
 def baca_csv(nama_file):
-    df = pd.read_csv(nama_file, index_col="id")
-    return df
+    try:
+        df = pd.read_csv(nama_file, index_col="id")
+        return df
+    except FileNotFoundError:
+        print(f"File {nama_file} tidak ditemukan.")
+        return pd.DataFrame()
 
 def tulis_csv(df, nama_file):
     df.to_csv(nama_file)
@@ -20,88 +24,109 @@ def get_last_id(df):
     else:
         return 0
 
-def knapsack_makanan():
-    os.system('cls')
-    df = baca_csv('Food.csv')
-
-    uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
-
-    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-    capacity = uang_customer
-    max_weight, selected_items = knapsack_01(items, capacity)
-
-    print(f"Berat maksimal dari pemilihan barang: {max_weight} gram")
-    print("Barang yang dipilih:")
-
-    # Create a table for the selected items
-    table = [[item["name"], item["price"], item["weight"]] for item in selected_items]
-    print(tabulate(table, headers=["Barang", "Harga (Rp)", "Berat (gram)"], tablefmt="grid"))
-    
-    input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan")
-
-def knapsack_minuman():
-    os.system('cls')
-    df = baca_csv('Drink.csv')
-
-    uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
-
-    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-    capacity = uang_customer
-    max_weight, selected_items = knapsack_01(items, capacity)
-
-    print(f"Berat maksimal dari pemilihan barang: {max_weight} ml")
-    print("Barang yang dipilih:")
-
-    # Create a table for the selected items
-    table = [[item["name"], item["price"], item["weight"]] for item in selected_items]
-    print(tabulate(table, headers=["Barang", "Harga (Rp)", "Berat (ml)"], tablefmt="grid"))
-    
-    input(f"Barang diatas merupakan barang yang anda dapat dengan uang {uang_customer} Rupiah, Tekan enter untuk melanjutkan")
-
 def knapsack_01(items, capacity):
+    random.shuffle(items)  # Mengacak urutan item sebelum diproses
     n = len(items)
     dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
-    included_items = [[[] for _ in range(capacity + 1)] for _ in range(n + 1)]
 
-    for i in range(n + 1):
-        for w in range(capacity + 1):
-            if i == 0 or w == 0:
-                dp[i][w] = 0
-            elif items[i - 1]["price"] <= w:
-                if items[i - 1]["weight"] + dp[i - 1][w - items[i - 1]["price"]] > dp[i - 1][w]:
-                    dp[i][w] = items[i - 1]["weight"] + dp[i - 1][w - items[i - 1]["price"]]
-                    included_items[i][w] = included_items[i - 1][w - items[i - 1]["price"]] + [items[i - 1]]
-                else:
-                    dp[i][w] = dp[i - 1][w]
-                    included_items[i][w] = included_items[i - 1][w]
+    # Mengisi tabel dp
+    for i in range(1, n + 1):
+        for w in range(1, capacity + 1):
+            if items[i - 1]["price"] <= w:
+                dp[i][w] = max(items[i - 1]["price"] + dp[i - 1][w - items[i - 1]["price"]],
+                               dp[i - 1][w])
             else:
                 dp[i][w] = dp[i - 1][w]
-                included_items[i][w] = included_items[i - 1][w]
 
-    return dp[n][capacity], included_items[n][capacity]
+    # Menemukan barang yang dipilih
+    res = dp[n][capacity]
+    w = capacity
+    selected_items = []
 
+    for i in range(n, 0, -1):
+        if res <= 0:
+            break
+        if res != dp[i - 1][w]:
+            selected_items.append(items[i - 1])
+            res -= items[i - 1]["price"]
+            w -= items[i - 1]["price"]
+            if w < 0:  # Pastikan w tidak negatif
+                break
+
+    return dp[n][capacity], selected_items
+
+
+
+
+def rekomendasi_barang(nama_file, jenis_barang):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    df = baca_csv(nama_file)
+
+    if df.empty:
+        input("Tidak ada data yang dapat diproses. Tekan Enter untuk kembali.")
+        return
+
+    try:
+        uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
+    except ValueError:
+        input("Input tidak valid. Tekan Enter untuk kembali.")
+        return
+
+    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
+    items = [item for item in items if item["price"] <= uang_customer and not pd.isnull(item["weight"])]
+
+    if not items:
+        print("Tidak ada barang yang dapat dibeli dengan uang tersebut.")
+        input("Tekan Enter untuk kembali.")
+    else:
+        max_weight, selected_items = knapsack_01(items, uang_customer)
+
+        unit = 'gram' if jenis_barang == 'makanan' else 'ml'
+        print("Barang yang dipilih:")
+
+        total_price = sum(item["price"] for item in selected_items)  # Menghitung total harga dari semua item yang dipilih
+        total_weight = sum(item["weight"] for item in selected_items)  # Menghitung total gram dari semua item yang dipilih
+        table = []
+
+        for item in selected_items:
+            table.append([item["name"], item["price"], item["weight"]])
+
+        print(tabulate(table, headers=["Barang", "Harga (Rp)", f"Berat ({unit})"], tablefmt="fancy_grid"))
+        print(f"Total harga: {total_price} Rupiah")
+        print(f"Total berat: {total_weight} {unit}")
+
+        input(f"Barang di atas merupakan barang yang Anda dapatkan dengan uang {uang_customer} Rupiah. Tekan Enter untuk melanjutkan")
+      
+import time
+
+def knapsack_makanan():
+    random.seed(time.time())  # Mengatur biji acak menggunakan waktu saat ini
+    rekomendasi_barang('Food.csv', 'makanan')
+
+def knapsack_minuman():
+    random.seed(time.time())  # Mengatur biji acak menggunakan waktu saat ini
+    rekomendasi_barang('Drink.csv', 'minuman')
 
 
 
 
 while True:
-    os.system('cls')
+        os.system('cls' if os.name == 'nt' else 'clear')
 
-    print('''
-    ||======================================||
-    ||      [1] Rekomendasi Makanan         ||
-    ||      [2] Rekomendasi Minuman         ||
-    ||      [3] Kembali                     ||
-    ||======================================||
-    ''')
+        print('''
+        ||======================================||
+        ||      [1] Rekomendasi Makanan         ||
+        ||      [2] Rekomendasi Minuman         ||
+        ||      [3] Kembali                     ||
+        ||======================================||
+        ''')
 
-    pilih = input('Masukkan pilihan: ')
-    match pilih:
-        case '1':
+        pilih = input('Masukkan pilihan: ')
+        if pilih == '1':
             knapsack_makanan()
-        case '2':
+        elif pilih == '2':
             knapsack_minuman()
-        case '3':
+        elif pilih == '3':
             break
-        case _ :
-            input('masukkan opsi sesuai yang diberikan. tekan enter untuk melanjutkan')
+        else:
+            input('Masukkan opsi sesuai yang diberikan. Tekan Enter untuk melanjutkan.')
