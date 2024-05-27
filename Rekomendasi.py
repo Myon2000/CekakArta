@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import getpass
 from tabulate import tabulate
+import random
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -66,7 +67,7 @@ def tambah_produk_cosmetik():
     os.system('cls')
     df = baca_csv('cosmetik.csv')
     merk =      input('Masukkan merk barang kosmetik yang ingin anda tambahkan : ')
-    netto = int(input('Masukkan netto barang anda                              : '))
+    netto = int(input('Masukkan netto barang anda(gram)                        : '))
     jumlah =int(input('Masukkan jumlah barang anda                             : '))
     harga = int(input('Masukkan harga barang anda(tanpa titik atau apapun)     : '))
 
@@ -382,7 +383,7 @@ def tambah_stock_drink():
 def tambah_stock_cosmetik():
     df = baca_csv('cosmetik.csv')
     print("Daftar semua Cosmetik : ")
-    tabel = [["ID", "Merk", "Netto", "Stock", "Harga"]]
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
@@ -464,7 +465,7 @@ def tambah_stock_shampoo():
 def tambah_stock_soap():
     df = baca_csv('Soap.csv')
     print("Daftar semua Sabun:")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
@@ -519,7 +520,7 @@ def home_tambah_stock ():
     ||  3. Kecantikan/Kosmetik             ||
     ||  4. Sabun                           ||
     ||  5. Sampo                           ||
-    ||  6. Kembali ke Menu Admin           ||
+    ||  6. Kembali ke Home Page            ||
     ||                                     ||
     ||=====================================||            
     ''')
@@ -540,40 +541,223 @@ def home_tambah_stock ():
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
 
-def home_pegawai():
-    while True:
-        os.system('cls')
-        print(f'''
-||=====================================||
-||     SELAMAT DATANG SANG PEGAWAI     ||
-||                                     ||
-||        Silahkan Pilih Opsi :        ||
-||                                     ||
-||  1. Tambahkan Stock                 ||
-||  2. Cari Pegawai                    ||
-||  3. Edit Pegawai                    ||
-||  4. Tambahkan Barang                ||
-||  5. Kembali ke Home Page            ||
-||                                     ||
-||=====================================||            
-''')
-        pilih = input("Masukkan Opsi Anda : ")
-        match pilih :
-            case '1' :
-                home_tambah_stock()
-            # case '2' :
-            #     home_kurangi_stock()
-            # case '3' :
-            #     edit_pegawai()
-            # case '4' :
-            #     home_tambah_barang()
-            case '5':
-                break
-            case _ :
-                input("Masukkan opsi sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan")
 
 # _____________________________________________________________CUSTOMER__________________________________________
-print('masukkan fitur customer')
+def knapsack_01(items, capacity):
+    random.shuffle(items)  # Mengacak urutan item sebelum diproses
+    n = len(items)
+    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+    # Mengisi tabel dp
+    for i in range(1, n + 1):
+        for w in range(1, capacity + 1):
+            if items[i - 1]["price"] <= w:
+                dp[i][w] = max(items[i - 1]["price"] + dp[i - 1][w - items[i - 1]["price"]],
+                               dp[i - 1][w])
+            else:
+                dp[i][w] = dp[i - 1][w]
+
+    # Menemukan barang yang dipilih
+    res = dp[n][capacity]
+    w = capacity
+    selected_items = []
+
+    for i in range(n, 0, -1):
+        if res <= 0:
+            break
+        if res != dp[i - 1][w]:
+            selected_items.append(items[i - 1])
+            res -= items[i - 1]["price"]
+            w -= items[i - 1]["price"]
+            if w < 0:  # Pastikan w tidak negatif
+                break
+
+    return dp[n][capacity], selected_items
+
+
+
+
+def rekomendasi_barang(nama_file, jenis_barang):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    df = baca_csv(nama_file)
+
+    if df.empty:
+        input("Tidak ada data yang dapat diproses. Tekan Enter untuk kembali.")
+        return
+
+    try:
+        uang_customer = int(input('Masukkan jumlah uang yang dimiliki customer: '))
+    except ValueError:
+        input("Input tidak valid. Tekan Enter untuk kembali.")
+        return
+
+    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
+    items = [item for item in items if item["price"] <= uang_customer and not pd.isnull(item["weight"])]
+
+    if not items:
+        print("Tidak ada barang yang dapat dibeli dengan uang tersebut.")
+        input("Tekan Enter untuk kembali.")
+    else:
+        max_weight, selected_items = knapsack_01(items, uang_customer)
+
+        unit = 'gram' if jenis_barang in ['makanan', 'kosmetik', 'Soap'] else 'ml'  # Penyesuaian unit
+        print("Barang yang dipilih:")
+
+        total_price = sum(item["price"] for item in selected_items)  # Menghitung total harga dari semua item yang dipilih
+        total_weight = sum(item["weight"] for item in selected_items)  # Menghitung total berat dari semua item yang dipilih
+
+        table = []
+
+        for item in selected_items:
+            table.append([item["name"], item["price"], item["weight"]])
+
+        print(tabulate(table, headers=["Barang", "Harga (Rp)", f"Berat ({unit})"], tablefmt="fancy_grid"))
+        print(f"Total harga: {total_price} Rupiah")
+        print(f"Total berat: {total_weight} {unit}")
+
+        input(f"Barang di atas merupakan barang yang Anda dapatkan dengan uang {uang_customer} Rupiah. Tekan Enter untuk melanjutkan")
+
+def knapsack_makanan():
+    rekomendasi_barang('Food.csv', 'makanan')
+
+def knapsack_minuman():
+    rekomendasi_barang('Drink.csv', 'minuman')
+
+def knapsack_kosmetik():
+    rekomendasi_barang('cosmetik.csv', 'Kosmetik')
+
+def knapsack_Soap():
+    rekomendasi_barang('Soap.csv', 'Sabun')
+
+def knapsack_Shampoo():
+    rekomendasi_barang('Shampoo.csv', 'Sampo')
+
+def lihat_stok_food():
+    df = baca_csv('Food.csv')
+    print("Daftar semua Makanan: ")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+def lihat_stok_drink():
+    df = baca_csv('drink.csv')
+    print("Daftar semua Minuman: ")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+def lihat_stok_kosmetik():
+    df = baca_csv('cosmetik.csv')
+    print("Daftar semua Kosmetik: ")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+def lihat_stok_sabun():
+    df = baca_csv('Shampoo.csv')
+    print("Daftar semua Sabun: ")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+def lihat_stok_shampo():
+    df = baca_csv('Shampoo.csv')
+    print("Daftar semua Sampo:")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+def home_rekomendasi():
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print('''
+        ||======================================||
+        ||      [1] Rekomendasi Makanan         ||
+        ||      [2] Rekomendasi Minuman         ||
+        ||      [3] Rekomendasi Kosmetik        ||
+        ||      [4] Rekomendasi Sabun           ||
+        ||      [5] Rekomendasi Sampo           ||
+        ||      [6] Kembali                     ||
+        ||======================================||
+        ''')
+
+        pilih = input('Masukkan pilihan: ')
+        if pilih == '1':
+            knapsack_makanan()
+        elif pilih == '2':
+            knapsack_minuman()
+        elif pilih == '3':
+            knapsack_kosmetik()
+        elif pilih == '4':
+            knapsack_Soap()
+        elif pilih == '5':
+            knapsack_Shampoo()
+        elif pilih == '6':
+            break
+        else:
+            input('Masukkan opsi sesuai yang diberikan. Tekan Enter untuk melanjutkan.')
+
+def home_Tampilkan_stock():
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print('''
+        ||======================================||
+        ||    Pilih Kategori yang diinginkan :  ||  
+        ||      [1] Makanan                     ||
+        ||      [2] Minuman                     ||
+        ||      [3] Kosmetik                    ||
+        ||      [4] Sabun                       ||
+        ||      [5] Sampo                       ||
+        ||      [6] Kembali                     ||
+        ||======================================||
+        ''')
+
+        pilih = input('Masukkan pilihan: ')
+        if pilih == '1':
+            lihat_stok_food()
+        elif pilih == '2':
+            lihat_stok_drink()
+        elif pilih == '3':
+            lihat_stok_kosmetik()
+        elif pilih == '4':
+            lihat_stok_sabun()
+        elif pilih == '5':
+            lihat_stok_shampo()
+        elif pilih == '6':
+            break
+        else:
+            input('Masukkan opsi sesuai yang diberikan. Tekan Enter untuk melanjutkan.')
+
+def home_customer():
+    while True :
+        os.system('cls')
+        print('''
+    ||======================================||
+    ||       Selamat datang Pelanggan       ||
+    ||  Silahkan pilih penggunaan aplikasi: ||
+    ||                                      ||
+    ||        [1] Lihat Stock Toko          ||
+    ||        [2] Rekomendasi               ||
+    ||                                      ||
+    ||======================================||
+    ''')
+        pilih = input("Masukkan pilihan anda : ")
+        match pilih :
+            case '1' :
+                home_Tampilkan_stock()
+            case '2' :
+                home_rekomendasi()
+            case '4' :
+                break
+            case _ :
+                input('Masukkan sesuai dengan opsi yang telah disediakan. Tekan enter untuk melanjutkan.')
 # _____________________________________________________________HOME PAGE_________________________________________
 
 while True :
@@ -628,7 +812,7 @@ while True :
                 if autentikasi_pegawai(username, password):
                     input('Autentikasi berhasil! Tekan enter untuk melanjutkan')
                     print("Berhasil Masuk")
-                    home_pegawai()
+                    home_tambah_stock()
                     break
                 else:
                     print('Username atau password salah!')
@@ -646,10 +830,9 @@ while True :
                     else:
                         input('Pilihan tidak valid! Kembali ke menu awal')
                         break
-            break
+            
         case '3':
-            input('Masuk ke Customer')
-            break
+            home_customer()
         case '4':
             break
         case _:
