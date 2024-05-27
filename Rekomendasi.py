@@ -110,212 +110,6 @@ def tambah_produk_soap():
         break
     input('Produk telah berhasil ditambahkan. Tekan enter untuk melanjutkan')
 
-def tambah_stock_food():
-    df = baca_csv('Food.csv')
-    print("Daftar semua Makanan:")
-    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
-
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
-    if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
-        return
-    
-    while True:
-        os.system('cls')
-        print('Menambah')
-        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-        print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
-        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok) : '))
-        
-        df.loc[id,'JML'] += stock_tambahan
-
-        tulis_csv(df, 'Food.csv')
-        os.system('cls')
-        print ('''
-    ||======================================||
-    ||           [1] Tambah lagi            ||
-    ||           [2] Kembali                ||
-    ||======================================||
-''')
-        pilih = input("Pilih opsi anda : ")
-        match pilih:
-            case '1':
-                continue
-            case '2' :
-                break
-            case _:
-                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
-
-def tambah_stock_drink():
-    df = baca_csv('drink.csv')
-    print("Daftar semua Minuman:")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
-
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
-    if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
-        return
-    
-    while True:
-        os.system('cls')
-        print('Menambah')
-        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
-        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan : '))
-        df.loc[id,'JML'] += stock_tambahan
-
-        tulis_csv(df, 'drink.csv')
-        os.system('cls')
-        print ('''
-    ||======================================||
-    ||           [1] Tambah lagi            ||
-    ||           [2] Kembali                ||
-    ||======================================||
-''')
-        pilih = input("Pilih opsi anda : ")
-        match pilih:
-            case '1':
-                continue
-            case '2' :
-                break
-            case _:
-                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
-
-
-def tambah_stock_cosmetik():
-    df = baca_csv('cosmetik.csv')
-    print("Daftar semua Cosmetik : ")
-    tabel = [["ID", "Merk", "Netto", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
-
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
-    if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
-        return
-    
-    while True:
-        os.system('cls')
-        print('Menambah')
-        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-        print('[2] Berat        : ' + str(df.loc[id, 'NETTO']))
-        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan : '))
-        df.loc[id,'JML'] += stock_tambahan
-
-        tulis_csv(df, 'cosmetik.csv')
-        os.system('cls')
-        print ('''
-    ||======================================||
-    ||           [1] Tambah lagi            ||
-    ||           [2] Kembali                ||
-    ||======================================||
-''')
-        pilih = input("Pilih opsi anda : ")
-        match pilih:
-            case '1':
-                continue
-            case '2' :
-                break
-            case _:
-                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
-
-def tambah_stock_shampoo():
-    df = baca_csv('Shampoo.csv')
-    print("Daftar semua Shampoo :")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
-
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
-    if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
-        return
-    
-    while True:
-        os.system('cls')
-        print('Menambah')
-        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
-        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan : '))
-        df.loc[id,'JML'] += stock_tambahan
-
-        tulis_csv(df, 'Shampoo.csv')
-        os.system('cls')
-        print ('''
-    ||======================================||
-    ||           [1] Tambah lagi            ||
-    ||           [2] Kembali                ||
-    ||======================================||
-''')
-        pilih = input("Pilih opsi anda : ")
-        match pilih:
-            case '1':
-                continue
-            case '2' :
-                break
-            case _:
-                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
-
-def tambah_stock_soap():
-    df = baca_csv('Soap.csv')
-    print("Daftar semua Sabun:")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
-
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
-    if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
-        return
-    
-    while True:
-        os.system('cls')
-        print('Menambah')
-        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
-        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan : '))
-        df.loc[id,'JML'] += stock_tambahan
-
-        tulis_csv(df, 'Soap.csv')
-        os.system('cls')
-        print ('''
-    ||======================================||
-    ||           [1] Tambah lagi            ||
-    ||           [2] Kembali                ||
-    ||======================================||
-''')
-        pilih = input("Pilih opsi anda : ")
-        match pilih:
-            case '1':
-                continue
-            case '2' :
-                break
-            case _:
-                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
 
 def tambah_pegawai ():
     os.system('cls')
@@ -358,7 +152,7 @@ def cari_pegawai ():
         tabel = [["Nama", "Nomor Handphone"]]
         for i in range(len(df)):
             tabel.append([df.loc[i, 'Nama'], df.loc[i, 'nomor_telepon']])
-        print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
+        print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
         input("Semua data telah ditampilkan. Tekan enter untuk melanjutkan")
 
     else :
@@ -380,7 +174,7 @@ def edit_pegawai():
     tabel = [["ID", "Nama Lengkap", "Username", "Alamat", "Nomor Telepon"]]
     for i in df.index:
         tabel.append([i, df.loc[i, 'Nama'], df.loc[i, 'username'], df.loc[i, 'alamat'], df.loc[i, 'nomor_telepon']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="grid"))
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
     id = int(input('Masukkan id Pegawai yang ingin diedit (angka): '))
 
@@ -434,8 +228,7 @@ def home_admin():
 ||  2. Cari Pegawai                    ||
 ||  3. Edit Pegawai                    ||
 ||  4. Tambahkan Barang                ||
-||  5. Tambahkan Stock                 ||
-||  6. Kembali ke Home Page            ||
+||  5. Kembali ke Home Page            ||
 ||                                     ||
 ||=====================================||            
 ''')
@@ -449,9 +242,7 @@ def home_admin():
                 edit_pegawai()
             case '4' :
                 home_tambah_barang()
-            case '5' :
-                home_tambah_stock()
-            case '6':
+            case '5':
                 break
             case _ :
                 input("Masukkan opsi sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan")
@@ -493,15 +284,234 @@ def home_tambah_barang ():
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
 
+
+# _____________________________________________________________PEGAWAI___________________________________________
+def autentikasi_pegawai(username, password):
+    df = baca_csv('Pegawai.csv')
+
+    pegawai = df.values.tolist()
+    for i in pegawai:
+        if i[1] == username and i[2] == password:
+            return True
+    return False
+
+def tambah_stock_food():
+    df = baca_csv('Food.csv')
+    print("Daftar semua Makanan:")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    if id not in df.index:
+        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        return
+    
+    while True:
+        os.system('cls')
+        print('Menambah')
+        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+        print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
+        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok dan tambahkan tanda min (-) jika \ningin mengurangi stok) : '))
+        
+        df.loc[id,'JML'] += stock_tambahan
+
+        tulis_csv(df, 'Food.csv')
+        os.system('cls')
+        print ('''
+    ||======================================||
+    ||           [1] Tambah lagi            ||
+    ||           [2] Kembali                ||
+    ||======================================||
+''')
+        pilih = input("Pilih opsi anda : ")
+        match pilih:
+            case '1':
+                continue
+            case '2' :
+                break
+            case _:
+                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
+
+def tambah_stock_drink():
+    df = baca_csv('drink.csv')
+    print("Daftar semua Minuman:")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    if id not in df.index:
+        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        return
+    
+    while True:
+        os.system('cls')
+        print('Menambah')
+        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
+        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok dan tambahkan tanda min (-) jika \ningin mengurangi stok) : '))
+        df.loc[id,'JML'] += stock_tambahan
+
+        tulis_csv(df, 'drink.csv')
+        os.system('cls')
+        print ('''
+    ||======================================||
+    ||           [1] Tambah lagi            ||
+    ||           [2] Kembali                ||
+    ||======================================||
+''')
+        pilih = input("Pilih opsi anda : ")
+        match pilih:
+            case '1':
+                continue
+            case '2' :
+                break
+            case _:
+                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
+
+
+def tambah_stock_cosmetik():
+    df = baca_csv('cosmetik.csv')
+    print("Daftar semua Cosmetik : ")
+    tabel = [["ID", "Merk", "Netto", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    if id not in df.index:
+        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        return
+    
+    while True:
+        os.system('cls')
+        print('Menambah')
+        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+        print('[2] Berat        : ' + str(df.loc[id, 'NETTO']))
+        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok dan tambahkan tanda min (-) jika \ningin mengurangi stok) : '))
+        df.loc[id,'JML'] += stock_tambahan
+
+        tulis_csv(df, 'cosmetik.csv')
+        os.system('cls')
+        print ('''
+    ||======================================||
+    ||           [1] Tambah lagi            ||
+    ||           [2] Kembali                ||
+    ||======================================||
+''')
+        pilih = input("Pilih opsi anda : ")
+        match pilih:
+            case '1':
+                continue
+            case '2' :
+                break
+            case _:
+                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
+
+def tambah_stock_shampoo():
+    df = baca_csv('Shampoo.csv')
+    print("Daftar semua Shampoo :")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    if id not in df.index:
+        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        return
+    
+    while True:
+        os.system('cls')
+        print('Menambah')
+        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
+        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok dan tambahkan tanda min (-) jika \ningin mengurangi stok) : '))
+        df.loc[id,'JML'] += stock_tambahan
+
+        tulis_csv(df, 'Shampoo.csv')
+        os.system('cls')
+        print ('''
+    ||======================================||
+    ||           [1] Tambah lagi            ||
+    ||           [2] Kembali                ||
+    ||======================================||
+''')
+        pilih = input("Pilih opsi anda : ")
+        match pilih:
+            case '1':
+                continue
+            case '2' :
+                break
+            case _:
+                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
+
+def tambah_stock_soap():
+    df = baca_csv('Soap.csv')
+    print("Daftar semua Sabun:")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    if id not in df.index:
+        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        return
+    
+    while True:
+        os.system('cls')
+        print('Menambah')
+        print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+        print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
+        print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+        print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+        stock_tambahan = int(input('Masukkan berapa stok yang ingin ditambahkan(ketik "0" jika ingin membatalkan penambahan stok dan tambahkan tanda min (-) jika \ningin mengurangi stok) : '))
+        df.loc[id,'JML'] += stock_tambahan
+
+        tulis_csv(df, 'Soap.csv')
+        os.system('cls')
+        print ('''
+    ||======================================||
+    ||           [1] Tambah lagi            ||
+    ||           [2] Kembali                ||
+    ||======================================||
+''')
+        pilih = input("Pilih opsi anda : ")
+        match pilih:
+            case '1':
+                continue
+            case '2' :
+                break
+            case _:
+                input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
+
+
 def home_tambah_stock ():
     while True:
         os.system('cls')
         print(f'''
     ||=====================================||
-    ||      SELAMAT DATANG SANG ADMIN      ||
+    ||     SELAMAT DATANG SANG PEGAWAI     ||
     ||                                     ||
     ||        Kategori barang Yang         ||
-    ||        Hendak Ditambahkan           ||
+    ||         Hendak Ditambahkan          ||
     ||              Stocknya :             ||
     ||                                     ||
     ||  1. Makanan/Snack                   ||
@@ -529,8 +539,39 @@ def home_tambah_stock ():
                 break
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
-# _____________________________________________________________PEGAWAI___________________________________________
-print('Masukkan fitur pegawai di sini')
+
+def home_pegawai():
+    while True:
+        os.system('cls')
+        print(f'''
+||=====================================||
+||     SELAMAT DATANG SANG PEGAWAI     ||
+||                                     ||
+||        Silahkan Pilih Opsi :        ||
+||                                     ||
+||  1. Tambahkan Stock                 ||
+||  2. Cari Pegawai                    ||
+||  3. Edit Pegawai                    ||
+||  4. Tambahkan Barang                ||
+||  5. Kembali ke Home Page            ||
+||                                     ||
+||=====================================||            
+''')
+        pilih = input("Masukkan Opsi Anda : ")
+        match pilih :
+            case '1' :
+                home_tambah_stock()
+            # case '2' :
+            #     home_kurangi_stock()
+            # case '3' :
+            #     edit_pegawai()
+            # case '4' :
+            #     home_tambah_barang()
+            case '5':
+                break
+            case _ :
+                input("Masukkan opsi sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan")
+
 # _____________________________________________________________CUSTOMER__________________________________________
 print('masukkan fitur customer')
 # _____________________________________________________________HOME PAGE_________________________________________
@@ -579,7 +620,32 @@ while True :
                         input('Pilihan tidak valid! Kembali ke menu awal')
                         break
         case '2':
-            input("Masukkan Username dan Sandi Pegawai")
+            while True:
+                os.system('cls')
+                username = input('Masukkan username: ')
+                password = getpass.getpass('Masukkan password: ')
+
+                if autentikasi_pegawai(username, password):
+                    input('Autentikasi berhasil! Tekan enter untuk melanjutkan')
+                    print("Berhasil Masuk")
+                    home_pegawai()
+                    break
+                else:
+                    print('Username atau password salah!')
+                    print('''
+    ||======================================||
+    ||           [1] Coba lagi              ||
+    ||           [2] Kembali                ||
+    ||======================================||
+    ''')
+                    a = input('Masukan: ')
+                    if a == '1':
+                        continue
+                    elif a == '2':
+                        break
+                    else:
+                        input('Pilihan tidak valid! Kembali ke menu awal')
+                        break
             break
         case '3':
             input('Masuk ke Customer')
