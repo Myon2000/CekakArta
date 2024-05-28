@@ -146,7 +146,7 @@ def cari_pegawai ():
     os.system('cls')
     df = baca_csv('Pegawai.csv')
     
-    keyword = input("Masukkan Pegawai yang ingin dicari (Kosongkan jika ingin melihat semuanya) : ")
+    keyword = input("Masukkan Username Pegawai yang ingin dicari (Kosongkan jika ingin melihat semuanya) : ")
 
     if keyword == "":
         print("Daftar semua Pegawai:")
@@ -284,6 +284,7 @@ def home_tambah_barang ():
                 break
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
+
 
 
 # _____________________________________________________________PEGAWAI___________________________________________
@@ -542,6 +543,7 @@ def home_tambah_stock ():
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
 
 
+
 # _____________________________________________________________CUSTOMER__________________________________________
 def knapsack_01(items, capacity):
     random.shuffle(items)  # Mengacak urutan item sebelum diproses
@@ -624,10 +626,10 @@ def knapsack_minuman():
     rekomendasi_barang('Drink.csv', 'minuman')
 
 def knapsack_kosmetik():
-    rekomendasi_barang('cosmetik.csv', 'Kosmetik')
+    rekomendasi_barang('cosmetik.csv', 'kosmetik')
 
 def knapsack_Soap():
-    rekomendasi_barang('Soap.csv', 'Sabun')
+    rekomendasi_barang('Soap.csv', 'Soap')
 
 def knapsack_Shampoo():
     rekomendasi_barang('Shampoo.csv', 'Sampo')
@@ -639,6 +641,7 @@ def lihat_stok_food():
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+    input('Stok barang berhasil ditampilkan. Tekan enter untuk lanjut')
 
 def lihat_stok_drink():
     df = baca_csv('drink.csv')
@@ -647,6 +650,7 @@ def lihat_stok_drink():
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+    input('Stok barang berhasil ditampilkan. Tekan enter untuk lanjut')
 
 def lihat_stok_kosmetik():
     df = baca_csv('cosmetik.csv')
@@ -655,6 +659,7 @@ def lihat_stok_kosmetik():
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+    input('Stok barang berhasil ditampilkan. Tekan enter untuk lanjut')
 
 def lihat_stok_sabun():
     df = baca_csv('Shampoo.csv')
@@ -663,6 +668,7 @@ def lihat_stok_sabun():
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+    input('Stok barang berhasil ditampilkan. Tekan enter untuk lanjut')
 
 def lihat_stok_shampo():
     df = baca_csv('Shampoo.csv')
@@ -671,6 +677,7 @@ def lihat_stok_shampo():
     for i in df.index:
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+    input('Stok barang berhasil ditampilkan. Tekan enter untuk lanjut')
 
 def home_rekomendasi():
     while True:
@@ -758,6 +765,8 @@ def home_customer():
                 break
             case _ :
                 input('Masukkan sesuai dengan opsi yang telah disediakan. Tekan enter untuk melanjutkan.')
+
+                
 # _____________________________________________________________HOME PAGE_________________________________________
 
 while True :
