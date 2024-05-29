@@ -229,7 +229,8 @@ def home_admin():
 ||  2. Cari Pegawai                    ||
 ||  3. Edit Pegawai                    ||
 ||  4. Tambahkan Barang                ||
-||  5. Kembali ke Home Page            ||
+||  5. Lihat Stock                     ||
+||  6. Kembali ke Home Page            ||
 ||                                     ||
 ||=====================================||            
 ''')
@@ -244,6 +245,8 @@ def home_admin():
             case '4' :
                 home_tambah_barang()
             case '5':
+                home_lihat_stock_admin()
+            case '6':
                 break
             case _ :
                 input("Masukkan opsi sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan")
@@ -285,6 +288,37 @@ def home_tambah_barang ():
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
 
+def home_lihat_stock_admin():
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print('''
+        ||======================================||
+        ||    Pilih Kategori yang diinginkan :  ||  
+        ||      [1] Makanan                     ||
+        ||      [2] Minuman                     ||
+        ||      [3] Kosmetik                    ||
+        ||      [4] Sabun                       ||
+        ||      [5] Sampo                       ||
+        ||      [6] Kembali                     ||
+        ||======================================||
+        ''')
+
+        pilih = input('Masukkan pilihan: ')
+        if pilih == '1':
+            lihat_stok_food()
+        elif pilih == '2':
+            lihat_stok_drink()
+        elif pilih == '3':
+            lihat_stok_kosmetik()
+        elif pilih == '4':
+            lihat_stok_sabun()
+        elif pilih == '5':
+            lihat_stok_shampo()
+        elif pilih == '6':
+            break
+        else:
+            input('Masukkan opsi sesuai yang diberikan. Tekan Enter untuk melanjutkan.')
 
 
 # _____________________________________________________________PEGAWAI___________________________________________
@@ -576,11 +610,57 @@ def knapsack_01(items, capacity):
 
     return dp[n][capacity], selected_items
 
+def update_stock(nama_file, selected_items):
+    df = baca_csv(nama_file)
+    for item in selected_items:
+        index = df[df['MEREK'] == item['name']].index[0]
+        df.at[index, 'STOCK'] = df.at[index, 'STOCK'] - 1
+    tulis_csv(df, nama_file)
 
+def merge_sort(arr, primary_key, secondary_key, reverse=False):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
 
+        merge_sort(left_half, primary_key, secondary_key, reverse)
+        merge_sort(right_half, primary_key, secondary_key, reverse)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if reverse:
+                if (left_half[i][primary_key] > right_half[j][primary_key]) or \
+                   (left_half[i][primary_key] == right_half[j][primary_key] and left_half[i][secondary_key] < right_half[j][secondary_key]):
+                    arr[k] = left_half[i]
+                    i += 1
+                else:
+                    arr[k] = right_half[j]
+                    j += 1
+            else:
+                if (left_half[i][primary_key] < right_half[j][primary_key]) or \
+                   (left_half[i][primary_key] == right_half[j][primary_key] and left_half[i][secondary_key] > right_half[j][secondary_key]):
+                    arr[k] = left_half[i]
+                    i += 1
+                else:
+                    arr[k] = right_half[j]
+                    j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+    return arr
 
 def rekomendasi_barang(nama_file, jenis_barang):
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls')
     df = baca_csv(nama_file)
 
     if df.empty:
@@ -599,8 +679,13 @@ def rekomendasi_barang(nama_file, jenis_barang):
     if not items:
         print("Tidak ada barang yang dapat dibeli dengan uang tersebut.")
         input("Tekan Enter untuk kembali.")
-    else:
+        return
+
+    while True:
+        os.system('cls')
         max_weight, selected_items = knapsack_01(items, uang_customer)
+
+        selected_items = merge_sort(selected_items, primary_key="price", secondary_key="weight", reverse=True)
 
         unit = 'gram' if jenis_barang in ['makanan', 'kosmetik', 'Soap'] else 'ml'  # Penyesuaian unit
         print("Barang yang dipilih:")
@@ -617,8 +702,27 @@ def rekomendasi_barang(nama_file, jenis_barang):
         print(f"Total harga: {total_price} Rupiah")
         print(f"Total berat: {total_weight} {unit}")
 
-        input(f"Barang di atas merupakan barang yang Anda dapatkan dengan uang {uang_customer} Rupiah. Tekan Enter untuk melanjutkan")
+        print('''
+    ||==================================================||
+    ||           [1] Generate Ulang                     ||
+    ||           [2] Beli semua produk yang tertera     ||
+    ||           [3] Kembali                            ||
+    ||==================================================||
+''')
+        pilih = input('Masukkan opsi anda : ')
+        match pilih:
+            case '1':
+                continue
+            case '2':
+                update_stock(nama_file, selected_items)
+                input("Barang berhasil dibeli. Tekan Enter untuk melanjutkan.")
+                break
+            case '3':
+                break
+            case _:
+                input('Masukkan pilihan sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan')
 
+    
 def knapsack_makanan():
     rekomendasi_barang('Food.csv', 'makanan')
 
@@ -839,7 +943,6 @@ while True :
                     else:
                         input('Pilihan tidak valid! Kembali ke menu awal')
                         break
-            
         case '3':
             home_customer()
         case '4':
