@@ -484,6 +484,7 @@ def autentikasi_pegawai(username, password):
     return False
 
 def tambah_stock_food():
+    os.system('cls')
     df = baca_csv('Food.csv')
     print("Daftar semua Makanan:")
     tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
@@ -493,7 +494,7 @@ def tambah_stock_food():
 
     id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Barang dengan id {id} tidak ditemukan!')
         return
     
     while True:
@@ -526,6 +527,7 @@ def tambah_stock_food():
                 input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
 
 def tambah_stock_drink():
+    os.system('cls')
     df = baca_csv('drink.csv')
     print("Daftar semua Minuman:")
     tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
@@ -535,7 +537,7 @@ def tambah_stock_drink():
 
     id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Barang dengan id {id} tidak ditemukan!')
         return
     
     while True:
@@ -568,6 +570,7 @@ def tambah_stock_drink():
 
 
 def tambah_stock_cosmetik():
+    os.system('cls')
     df = baca_csv('cosmetik.csv')
     print("Daftar semua Cosmetik : ")
     tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
@@ -577,7 +580,7 @@ def tambah_stock_cosmetik():
 
     id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Barang dengan id {id} tidak ditemukan!')
         return
     
     while True:
@@ -609,6 +612,7 @@ def tambah_stock_cosmetik():
                 input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
 
 def tambah_stock_shampoo():
+    os.system('cls')
     df = baca_csv('Shampoo.csv')
     print("Daftar semua Shampoo :")
     tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
@@ -618,7 +622,7 @@ def tambah_stock_shampoo():
 
     id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Barang dengan id {id} tidak ditemukan!')
         return
     
     while True:
@@ -650,6 +654,7 @@ def tambah_stock_shampoo():
                 input('Pilih opsi yang disediakan. Tekan enter untuk melanjutkan')
 
 def tambah_stock_soap():
+    os.system('cls')
     df = baca_csv('Soap.csv')
     print("Daftar semua Sabun:")
     tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
@@ -659,7 +664,7 @@ def tambah_stock_soap():
 
     id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Barang dengan id {id} tidak ditemukan!')
         return
     
     while True:
