@@ -203,6 +203,7 @@ def hapus_pegawai():
     ||==================================||
     ''')
             pilih = input('Masukkan pilihan anda.')
+
             match pilih :
                 case '1':
                     df = df.drop(index)
@@ -210,8 +211,10 @@ def hapus_pegawai():
                     print(f'Produk pada index {index} telah berhasil dihapus : ')
                     input('Tekan enter untuk melanjutkan')
                     break
+
                 case '2':
                     break
+                
                 case _:
                     input('Masukkan pilihan sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan')
         else:
@@ -851,6 +854,7 @@ def rekomendasi_barang(nama_file, jenis_barang):
     ||==================================================||
 ''')
         pilih = input('Masukkan opsi anda : ')
+
         match pilih:
             case '1':
                 continue
@@ -972,6 +976,7 @@ def home_Tampilkan_stock():
         ''')
 
         pilih = input('Masukkan pilihan: ')
+
         if pilih == '1':
             lihat_stok_food()
         elif pilih == '2':
@@ -1001,6 +1006,7 @@ def home_customer():
     ||======================================||
     ''')
         pilih = input("Masukkan pilihan anda : ")
+
         match pilih :
             case '1' :
                 home_Tampilkan_stock()
@@ -1029,6 +1035,7 @@ while True :
     ''')
 
     pengguna = input('Masukan: ')
+
     match pengguna:
         case '1':
             while True:
@@ -1057,6 +1064,7 @@ while True :
                     else:
                         input('Pilihan tidak valid! Kembali ke menu awal')
                         break
+
         case '2':
             while True:
                 os.system('cls')
