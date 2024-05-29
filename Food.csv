@@ -5,7 +5,7 @@ id,MEREK,NETTO,JML,HARGA
 3,Leanet Beef BBQ,8.0,6,400
 4,Leanet Seaweed,8.0,5,400
 5,Piattoz sapi panggang,12.0,6,800
-6,piattoz barbeque,12.0,6,800
+6,piattoz barbeque,12.0,5,800
 7,Kentang goreng ala french fries,18.0,6,800
 8,Twistko salsa rasa balado,17.0,6,800
 9,Kenji net rasa ayam,16.0,6,800
@@ -23,12 +23,12 @@ id,MEREK,NETTO,JML,HARGA
 21,Gery Toya Toya pisang,9.0,10,400
 22,Gery 2 Choco Roll Keju,11.0,24,400
 23,Gery 2 Choco Roll Coklat,11.0,24,400
-24,Gery Odonat,12.0,8,400
+24,Gery Odonat,12.0,7,400
 25,Gery Chopstick,10.0,4,400
 26,Gery Bischoc,10.0,18,400
 27,Good Time,21.0,12,800
 28,All stars,16.0,6,800
-29,Morillo Balado pedas,9.0,20,400
+29,Morillo Balado pedas,9.0,19,400
 30,Morillo cream choclate,9.0,20,400
 31,Bismaxx,18.0,10,400
 32,Togo coklat,17.5,16,400
@@ -42,13 +42,13 @@ id,MEREK,NETTO,JML,HARGA
 40,Fenisia crim coklat,280.0,2,4400
 41,Fenisia crim vanila,280.0,2,4400
 42,Richoco nabati time break,12.0,20,400
-43,Gery wafelatos,10.0,5,400
-44,Kraft tuc seaweed,21.0,12,400
-45,Roma biscuit kelapa,300.0,5,5200
+43,Gery wafelatos,10.0,4,400
+44,Kraft tuc seaweed,21.0,11,400
+45,Roma biscuit kelapa,300.0,4,5200
 46,Malkist rasa abon sapi,145.0,3,3600
 47,Malkist crackers,137.0,3,3600
 48,Kukis mochachino,300.0,3,4400
-49,kukis durian,300.0,3,4400
+49,kukis durian,300.0,2,4400
 50,Kukis butter,300.0,3,4400
 51,Kukis kelapa,115.0,3,2400
 52,Better susu vanila,115.0,2,2400
@@ -60,7 +60,7 @@ id,MEREK,NETTO,JML,HARGA
 58,Beng-beng hazelnut,20.0,10,800
 59,origo chocolate,16.5,15,400
 60,Go smily coklat,16.0,8,400
-61,Mini coco vanila coklat,17.0,4,400
+61,Mini coco vanila coklat,17.0,3,400
 62,Goriorio kelapa,16.0,21,400
 63,Goriorio mix,16.0,20,400
 64,Goriorio tiramisu,16.0,22,400
@@ -78,7 +78,7 @@ id,MEREK,NETTO,JML,HARGA
 76,Mie salam goreng,65.0,14,800
 77,Mie sedap kuah soto,75.0,11,1200
 78,Mie sedap kuah ayam bawang,70.0,22,1200
-79,Mie sedap kuah ayam special,69.0,10,1200
-80,Indomie sambel ijo,85.0,20,1360
+79,Mie sedap kuah ayam special,69.0,9,1200
+80,Indomie sambel ijo,85.0,19,1360
 81,Indomie goreng,85.0,16,2000
 82,Assorted Biscuits,650.0,2,65000

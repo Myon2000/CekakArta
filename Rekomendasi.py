@@ -614,7 +614,7 @@ def update_stock(nama_file, selected_items):
     df = baca_csv(nama_file)
     for item in selected_items:
         index = df[df['MEREK'] == item['name']].index[0]
-        df.at[index, 'STOCK'] = df.at[index, 'STOCK'] - 1
+        df.at[index, 'JML'] = df.at[index, 'JML'] - 1
     tulis_csv(df, nama_file)
 
 def merge_sort(arr, primary_key, secondary_key):
