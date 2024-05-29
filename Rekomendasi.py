@@ -617,34 +617,25 @@ def update_stock(nama_file, selected_items):
         df.at[index, 'STOCK'] = df.at[index, 'STOCK'] - 1
     tulis_csv(df, nama_file)
 
-def merge_sort(arr, primary_key, secondary_key, reverse=False):
+def merge_sort(arr, primary_key, secondary_key):
     if len(arr) > 1:
         mid = len(arr) // 2
         left_half = arr[:mid]
         right_half = arr[mid:]
 
-        merge_sort(left_half, primary_key, secondary_key, reverse)
-        merge_sort(right_half, primary_key, secondary_key, reverse)
+        merge_sort(left_half, primary_key, secondary_key)
+        merge_sort(right_half, primary_key, secondary_key)
 
         i = j = k = 0
 
         while i < len(left_half) and j < len(right_half):
-            if reverse:
-                if (left_half[i][primary_key] > right_half[j][primary_key]) or \
-                   (left_half[i][primary_key] == right_half[j][primary_key] and left_half[i][secondary_key] < right_half[j][secondary_key]):
-                    arr[k] = left_half[i]
-                    i += 1
-                else:
-                    arr[k] = right_half[j]
-                    j += 1
+            if (left_half[i][primary_key] > right_half[j][primary_key]) or \
+               (left_half[i][primary_key] == right_half[j][primary_key] and left_half[i][secondary_key] > right_half[j][secondary_key]):
+                arr[k] = left_half[i]
+                i += 1
             else:
-                if (left_half[i][primary_key] < right_half[j][primary_key]) or \
-                   (left_half[i][primary_key] == right_half[j][primary_key] and left_half[i][secondary_key] > right_half[j][secondary_key]):
-                    arr[k] = left_half[i]
-                    i += 1
-                else:
-                    arr[k] = right_half[j]
-                    j += 1
+                arr[k] = right_half[j]
+                j += 1
             k += 1
 
         while i < len(left_half):
@@ -658,6 +649,7 @@ def merge_sort(arr, primary_key, secondary_key, reverse=False):
             k += 1
 
     return arr
+
 
 def rekomendasi_barang(nama_file, jenis_barang):
     os.system('cls')
@@ -685,7 +677,7 @@ def rekomendasi_barang(nama_file, jenis_barang):
         os.system('cls')
         max_weight, selected_items = knapsack_01(items, uang_customer)
 
-        selected_items = merge_sort(selected_items, primary_key="price", secondary_key="weight", reverse=True)
+        selected_items = merge_sort(selected_items, primary_key="price", secondary_key="weight")
 
         unit = 'gram' if jenis_barang in ['makanan', 'kosmetik', 'Soap'] else 'ml'  # Penyesuaian unit
         print("Barang yang dipilih:")
