@@ -111,6 +111,114 @@ def tambah_produk_soap():
         break
     input('Produk telah berhasil ditambahkan. Tekan enter untuk melanjutkan')
 
+def hapus_produk_food():
+    os.system('cls')
+    df = baca_csv('Food.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index barang yang ingin dihapus: '))
+
+    if index in df.index:
+        df = df.drop(index)
+        tulis_csv(df, 'Food.csv')
+        print(f'Produk pada index {index} telah berhasil dihapus.')
+    else:
+        print(f'Index {index} tidak ditemukan.')
+
+    input('Tekan enter untuk melanjutkan')
+
+def hapus_produk_drink():
+    os.system('cls')
+    df = baca_csv('drink.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index barang yang ingin dihapus: '))
+
+    if index in df.index:
+        df = df.drop(index)
+        tulis_csv(df, 'drink.csv')
+        print(f'Produk pada index {index} telah berhasil dihapus.')
+    else:
+        print(f'Index {index} tidak ditemukan.')
+
+    input('Tekan enter untuk melanjutkan')
+
+def hapus_produk_cosmetik():
+    os.system('cls')
+    df = baca_csv('cosmetik.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index barang yang ingin dihapus: '))
+
+    if index in df.index:
+        df = df.drop(index)
+        tulis_csv(df, 'cosmetik.csv')
+        print(f'Produk pada index {index} telah berhasil dihapus.')
+    else:
+        print(f'Index {index} tidak ditemukan.')
+
+    input('Tekan enter untuk melanjutkan')
+
+def hapus_produk_shampoo():
+    os.system('cls')
+    df = baca_csv('Shampoo.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index barang yang ingin dihapus: '))
+
+    if index in df.index:
+        df = df.drop(index)
+        tulis_csv(df, 'Shampoo.csv')
+        print(f'Produk pada index {index} telah berhasil dihapus.')
+    else:
+        print(f'Index {index} tidak ditemukan.')
+
+    input('Tekan enter untuk melanjutkan')
+
+def hapus_produk_Soap():
+    os.system('cls')
+    df = baca_csv('Soap.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index barang yang ingin dihapus: '))
+
+    if index in df.index:
+        df = df.drop(index)
+        tulis_csv(df, 'Soap.csv')
+        print(f'Produk pada index {index} telah berhasil dihapus.')
+    else:
+        print(f'Index {index} tidak ditemukan.')
+
+    input('Tekan enter untuk melanjutkan')
+
+def hapus_pegawai():
+    os.system('cls')
+    df = baca_csv('Pegawai.csv')
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+    index = int(input('Masukkan index akun pegawai yang ingin dihapus: '))
+
+    while True:
+        if index in df.index:
+            print('''
+    ||==================================||
+    ||  Anda Yakin Ingin Menghapus      ||
+    ||        Akun Pegawai ??           ||
+    ||        [1] Yakin                 ||
+    ||        [2] Tidak                 ||
+    ||==================================||
+    ''')
+            pilih = input('Masukkan pilihan anda.')
+            match pilih :
+                case '1':
+                    df = df.drop(index)
+                    tulis_csv(df, 'Pegawai.csv')
+                    print(f'Produk pada index {index} telah berhasil dihapus : ')
+                    input('Tekan enter untuk melanjutkan')
+                    break
+                case '2':
+                    break
+                case _:
+                    input('Masukkan pilihan sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan')
+        else:
+            print(f'Index {index} tidak ditemukan.')
+            continue
+
+    
 
 def tambah_pegawai ():
     os.system('cls')
@@ -131,7 +239,7 @@ def tambah_pegawai ():
             continue
         
         if username in df['username'].values:
-            input("Username telah dipakai. Tekan enter untuk melanjutkan")
+            input("Username telah dipakai. Tekan enter untuk melanjutkan.")
             username = input("Masukkan username pegawai         : ")
             continue
         
@@ -226,11 +334,13 @@ def home_admin():
 ||        Silahkan Pilih Opsi :        ||
 ||                                     ||
 ||  1. Tambahkan Pegawai               ||
-||  2. Cari Pegawai                    ||
-||  3. Edit Pegawai                    ||
-||  4. Tambahkan Barang                ||
-||  5. Lihat Stock                     ||
-||  6. Kembali ke Home Page            ||
+||  2. Hapus Pegawai                   ||
+||  3. Cari Pegawai                    ||
+||  4. Edit Pegawai                    ||
+||  5. Tambahkan Barang                ||
+||  6. Hapus Barang                    ||
+||  7. Lihat Stock                     ||
+||  8. Kembali ke Home Page            ||
 ||                                     ||
 ||=====================================||            
 ''')
@@ -239,18 +349,57 @@ def home_admin():
             case '1' :
                 tambah_pegawai()
             case '2' :
-                cari_pegawai()
+                hapus_pegawai()
             case '3' :
-                edit_pegawai()
+                cari_pegawai()
             case '4' :
+                edit_pegawai()
+            case '5' :
                 home_tambah_barang()
-            case '5':
-                home_lihat_stock_admin()
             case '6':
+                home_hapus_barang()
+            case '7':
+                home_lihat_stock_admin()
+            case '8':
                 break
             case _ :
                 input("Masukkan opsi sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan")
 
+def home_hapus_barang ():
+    while True:
+        os.system('cls')
+        print(f'''
+    ||=====================================||
+    ||      SELAMAT DATANG SANG ADMIN      ||
+    ||                                     ||
+    ||        Kategori barang Yang         ||
+    ||          Hendak Dihapus :           ||
+    ||                                     ||
+    ||  1. Makanan/Snack                   ||
+    ||  2. Minuman                         ||
+    ||  3. Kecantikan/Kosmetik             ||
+    ||  4. Sabun                           ||
+    ||  5. Sampo                           ||
+    ||  6. Kembali ke Menu Admin           ||
+    ||                                     ||
+    ||=====================================||            
+    ''')
+        pilih = input ('Masukkan opsi yang ingin anda pilih : ')
+        match pilih :
+            case '1':
+                hapus_produk_food()
+            case '2':
+                hapus_produk_drink()
+            case '3':
+                hapus_produk_cosmetik()
+            case '4':
+                hapus_produk_Soap()
+            case '5':
+                hapus_produk_shampoo()
+            case '6':
+                break
+            case _ :
+                input('Masukkan opsi sesuai yang telah disediakan. Tekan enter untuk melanjutkan')
 
 def home_tambah_barang ():
     while True:
