@@ -70,10 +70,10 @@ id,MEREK,NETTO,JML,HARGA
 68,Fullo Twist,12.0,20,400
 69,Fullo Vanila,12.0,20,400
 70,Zuperr keju,13.0,20,400
-71,DM Margaroni Telur,,10,400
-72,DM Kacang Kapri,,9,400
-73,DM Morning Jagung,,20,400
-74,DM Pang Pang,,20,400
+71,DM Margaroni Telur,13.0,10,400
+72,DM Kacang Kapri,13.0,9,400
+73,DM Morning Jagung,13.0,20,400
+74,DM Pang Pang,13.0,20,400
 75,Mie salam ayam special,65.0,22,800
 76,Mie salam goreng,65.0,14,800
 77,Mie sedap kuah soto,75.0,11,1200
@@ -81,4 +81,4 @@ id,MEREK,NETTO,JML,HARGA
 79,Mie sedap kuah ayam special,69.0,9,1200
 80,Indomie sambel ijo,85.0,19,1360
 81,Indomie goreng,85.0,15,2000
-82,Assorted Biscuits,650.0,2,65000
+82,Assorted Biscuits,650.0,2,64000

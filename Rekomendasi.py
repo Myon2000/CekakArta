@@ -189,7 +189,10 @@ def hapus_produk_Soap():
 def hapus_pegawai():
     os.system('cls')
     df = baca_csv('Pegawai.csv')
-    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
+
+    df_display = df.drop(columns=['password'], errors='ignore')
+    
+    print(tabulate(df_display, headers='keys', tablefmt='fancy_grid'))
     index = int(input('Masukkan index akun pegawai yang ingin dihapus: '))
 
     while True:
@@ -202,13 +205,13 @@ def hapus_pegawai():
     ||        [2] Tidak                 ||
     ||==================================||
     ''')
-            pilih = input('Masukkan pilihan anda.')
+            pilih = input('Masukkan pilihan anda : ')
 
-            match pilih :
+            match pilih:
                 case '1':
                     df = df.drop(index)
                     tulis_csv(df, 'Pegawai.csv')
-                    print(f'Produk pada index {index} telah berhasil dihapus : ')
+                    print(f'Akun pegawai pada index {index} telah berhasil dihapus.')
                     input('Tekan enter untuk melanjutkan')
                     break
 
@@ -219,7 +222,7 @@ def hapus_pegawai():
                     input('Masukkan pilihan sesuai dengan yang telah disediakan. Tekan enter untuk melanjutkan')
         else:
             print(f'Index {index} tidak ditemukan.')
-            continue
+            break
 
     
 
@@ -234,7 +237,7 @@ def tambah_pegawai ():
 
     df = baca_csv('Pegawai.csv')
     while True:
-
+        os.system('cls')
         if password != password2:
             input("Pastikan password anda telah sama. Tekan enter untuk melanjutkan")
             password =  getpass.getpass("Masukkan password pegawai         : ") 
@@ -271,11 +274,9 @@ def cari_pegawai ():
         for i in range(len(df)):
             if df.loc[i, 'username'] == keyword:
                 os.system('cls')
-                print(f"Username ditemukan: {df.loc[i, 'Nama']} \nNomor Handphone: {df.loc[i, 'nomor_telepon']}")
+                print(f"Username ditemukan : {df.loc[i, 'Nama']} \nNomor Handphone : {df.loc[i, 'nomor_telepon']} \nAlamat : {df.loc[i, 'alamat']} \n")
                 print(input('Data telah ditampilkan. Tekan enter untuk melanjutkan'))
         return "kosong"
-    
-
 
 def edit_pegawai():
     os.system('cls')
@@ -336,10 +337,15 @@ def home_admin():
 ||                                     ||
 ||        Silahkan Pilih Opsi :        ||
 ||                                     ||
+||      ====== Atur Pegawai =====      ||
+||                                     ||
 ||  1. Tambahkan Pegawai               ||
 ||  2. Hapus Pegawai                   ||
 ||  3. Cari Pegawai                    ||
 ||  4. Edit Pegawai                    ||
+||                                     ||
+||       ===== Atur Barang =====       ||
+||                                     ||
 ||  5. Tambahkan Barang                ||
 ||  6. Ubah Harga Barang               ||
 ||  7. Hapus Barang                    ||
@@ -918,7 +924,7 @@ def home_ubah_harga():
 
 # _____________________________________________________________CUSTOMER__________________________________________
 def knapsack_01(items, capacity):
-    random.shuffle(items)  # Mengacak urutan item sebelum diproses
+    random.shuffle(items)
     n = len(items)
     dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
 
@@ -1204,7 +1210,7 @@ def home_customer():
                 input('Masukkan sesuai dengan opsi yang telah disediakan. Tekan enter untuk melanjutkan.')
 
                 
-# _____________________________________________________________HOME PAGE_________________________________________
+# ____________________________________________________________HOME PAGE_________________________________________
 
 while True :
     os.system('cls')
