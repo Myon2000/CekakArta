@@ -111,11 +111,263 @@ def tambah_produk_soap():
         break
     input('Produk telah berhasil ditambahkan. Tekan enter untuk melanjutkan')
 
+def ubah_harga_food():
+    os.system('cls')
+    df = baca_csv('Food.csv')
+    print("Daftar semua Makanan:")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id_input = input('Masukkan id barang yang ingin diubah harganya (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi ubah harga.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan! Tekan Enter untuk melanjutkan.')
+        return
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan!')
+        return
+
+    os.system('cls')
+    print('Mengubah Harga')
+    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+    print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
+    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+    harga_baru = float(input('Masukkan harga baru: '))
+    df.loc[id, 'HARGA'] = harga_baru
+
+    tulis_csv(df, 'Food.csv')
+    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
+
+
+def ubah_harga_drink():
+    os.system('cls')
+    df = baca_csv('drink.csv')
+    print("Daftar semua Minuman:")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id_input = input('Masukkan id barang yang ingin diubah harganya (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi ubah harga.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan!')
+        return
+
+    os.system('cls')
+    print('Mengubah Harga')
+    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+    print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
+    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+    harga_baru = float(input('Masukkan harga baru: '))
+    df.loc[id, 'HARGA'] = harga_baru
+
+    tulis_csv(df, 'drink.csv')
+    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
+
+
+def ubah_harga_cosmetik():
+    os.system('cls')
+    df = baca_csv('cosmetik.csv')
+    print("Daftar semua Kosmetik:")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id_input = input('Masukkan id barang yang ingin diubah harganya (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi ubah harga.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan!')
+        return
+
+    os.system('cls')
+    print('Mengubah Harga')
+    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+    print('[2] Berat        : ' + str(df.loc[id, 'NETTO']))
+    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+    harga_baru = float(input('Masukkan harga baru: '))
+    df.loc[id, 'HARGA'] = harga_baru
+
+    tulis_csv(df, 'cosmetik.csv')
+    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
+
+
+def ubah_harga_shampoo():
+    os.system('cls')
+    df = baca_csv('Shampoo.csv')
+    print("Daftar semua Shampoo:")
+    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id_input = input('Masukkan id barang yang ingin diubah harganya (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi ubah harga.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan!')
+        return
+
+    os.system('cls')
+    print('Mengubah Harga')
+    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+    print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
+    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+    harga_baru = float(input('Masukkan harga baru: '))
+    df.loc[id, 'HARGA'] = harga_baru
+
+    tulis_csv(df, 'Shampoo.csv')
+    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
+
+
+def ubah_harga_soap():
+    os.system('cls')
+    df = baca_csv('Soap.csv')
+    print("Daftar semua Sabun:")
+    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
+    for i in df.index:
+        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
+    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
+
+    id_input = input('Masukkan id barang yang ingin diubah harganya (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi ubah harga.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
+    if id not in df.index:
+        input(f'Barang dengan id {id} tidak ditemukan!')
+        return
+
+    os.system('cls')
+    print('Mengubah Harga')
+    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
+    print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
+    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
+    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
+
+    harga_baru = float(input('Masukkan harga baru: '))
+    df.loc[id, 'HARGA'] = harga_baru
+
+    tulis_csv(df, 'Soap.csv')
+    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
+
+
+def home_ubah_harga():
+    while True:
+        os.system('cls')
+        print(f'''
+    ||=====================================||
+    ||     SELAMAT DATANG SANG PEGAWAI     ||
+    ||                                     ||
+    ||        Kategori barang Yang         ||
+    ||         Hendak Diubah               ||
+    ||              Harganya :             ||
+    ||                                     ||
+    ||  1. Makanan/Snack                   ||
+    ||  2. Minuman                         ||
+    ||  3. Kecantikan/Kosmetik             ||
+    ||  4. Sabun                           ||
+    ||  5. Sampo                           ||
+    ||  6. Kembali ke Home Page            ||
+    ||                                     ||
+    ||=====================================||            
+    ''')
+        pilih = input('Masukkan opsi yang ingin anda pilih: ')
+        match pilih:
+            case '1':
+                ubah_harga_food()
+            case '2':
+                ubah_harga_drink()
+            case '3':
+                ubah_harga_cosmetik()
+            case '4':
+                ubah_harga_soap()
+            case '5':
+                ubah_harga_shampoo()
+            case '6':
+                break
+            case _:
+                input('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
+
 def hapus_produk_food():
     os.system('cls')
     df = baca_csv('Food.csv')
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
-    index = int(input('Masukkan index barang yang ingin dihapus: '))
+    id_input = input('Masukkan id barang yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan penghapusan barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
 
     if index in df.index:
         df = df.drop(index)
@@ -130,7 +382,19 @@ def hapus_produk_drink():
     os.system('cls')
     df = baca_csv('drink.csv')
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
-    index = int(input('Masukkan index barang yang ingin dihapus: '))
+    id_input = input('Masukkan id barang yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan penghapusan barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
 
     if index in df.index:
         df = df.drop(index)
@@ -145,7 +409,18 @@ def hapus_produk_cosmetik():
     os.system('cls')
     df = baca_csv('cosmetik.csv')
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
-    index = int(input('Masukkan index barang yang ingin dihapus: '))
+    id_input = input('Masukkan id barang yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan penghapusan barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
 
     if index in df.index:
         df = df.drop(index)
@@ -160,7 +435,18 @@ def hapus_produk_shampoo():
     os.system('cls')
     df = baca_csv('Shampoo.csv')
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
-    index = int(input('Masukkan index barang yang ingin dihapus: '))
+    id_input = input('Masukkan id barang yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan penghapusan barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
 
     if index in df.index:
         df = df.drop(index)
@@ -175,7 +461,18 @@ def hapus_produk_Soap():
     os.system('cls')
     df = baca_csv('Soap.csv')
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))  # Tampilkan data menggunakan tabulate
-    index = int(input('Masukkan index barang yang ingin dihapus: '))
+    id_input = input('Masukkan id barang yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi penghapusan barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
 
     if index in df.index:
         df = df.drop(index)
@@ -193,7 +490,19 @@ def hapus_pegawai():
     df_display = df.drop(columns=['password'], errors='ignore')
     
     print(tabulate(df_display, headers='keys', tablefmt='fancy_grid'))
-    index = int(input('Masukkan index akun pegawai yang ingin dihapus: '))
+    id_input = input('Masukkan id akun pegawai yang ingin dihapus (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan operasi Penghapusan Akun Pegawai.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        index = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
 
     while True:
         if index in df.index:
@@ -283,54 +592,69 @@ def edit_pegawai():
     df = baca_csv('Pegawai.csv')
 
     # Menampilkan semua anggota
-    print("Daftar semua anggota:")
+    print("Daftar semua Pegawai:")
     tabel = [["ID", "Nama Lengkap", "Username", "Alamat", "Nomor Telepon"]]
     for i in df.index:
         tabel.append([i, df.loc[i, 'Nama'], df.loc[i, 'username'], df.loc[i, 'alamat'], df.loc[i, 'nomor_telepon']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id Pegawai yang ingin diedit (angka): '))
+    id_input = input('Masukkan id Pegawai yang ingin diedit (angka) atau tekan Enter untuk membatalkan: ')
+
+    if id_input == '':
+        print('Membatalkan operasi edit.')
+        input('Tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
 
     # Memastikan id anggota ada
     if id not in df.index:
-        input(f'Pegawai dengan id {id} tidak ditemukan!')
+        input(f'Pegawai dengan id {id} tidak ditemukan! Tekan Enter untuk melanjutkan.')
         return
 
-    while True:
-        os.system('cls')
-        print('Mengedit pegawai')
-        print('[1] Nama lengkap: ' + df.loc[id, 'Nama'])
-        print('[2] Username: ' + df.loc[id, 'username'])
-        print('[3] Alamat: ' + str(df.loc[id, 'alamat']))
-        print('[4] Nomor Telepon : ' + str(df.loc[id, 'nomor_telepon']))
-        print('[5] Selesai')
+    try:
+        while True:
+            os.system('cls')
+            print('Mengedit pegawai')
+            print('[1] Nama lengkap: ' + df.loc[id, 'Nama'])
+            print('[2] Username: ' + df.loc[id, 'username'])
+            print('[3] Alamat: ' + str(df.loc[id, 'alamat']))
+            print('[4] Nomor Telepon : ' + str(df.loc[id, 'nomor_telepon']))
+            print('[5] Selesai')
 
-        pilihan = input('Masukan: ')
-        match pilihan:
-            case '1':
-                nama_lengkap_baru = input('Masukkan nama lengkap baru: ')
-                df.loc[id, 'Nama'] = nama_lengkap_baru
-            case '2':
-                username = input('Masukkan username baru: ')
-                df.loc[id, 'username'] = username
-            case '3':
-                alamat = input('Masukkan alamat baru: ')
-                df.loc[id, 'alamat'] = alamat
-            case '4':
-                nomor_telp = input('Masukkan Nomor Telepon baru : ') 
-                df.loc[id, 'nomor_telepon'] = nomor_telp
-            case '5' :
-                break
-            case _:
-                input('Pilihan tidak valid! Tekan enter untuk melanjutkan')
-                continue
+            pilihan = input('Masukan: ')
+            match pilihan:
+                case '1':
+                    nama_lengkap_baru = input('Masukkan nama lengkap baru: ')
+                    df.loc[id, 'Nama'] = nama_lengkap_baru
+                case '2':
+                    username = input('Masukkan username baru: ')
+                    df.loc[id, 'username'] = username
+                case '3':
+                    alamat = input('Masukkan alamat baru: ')
+                    df.loc[id, 'alamat'] = alamat
+                case '4':
+                    nomor_telp = input('Masukkan Nomor Telepon baru : ') 
+                    df.loc[id, 'nomor_telepon'] = nomor_telp
+                case '5':
+                    break
+                case _:
+                    input('Pilihan tidak valid! Tekan enter untuk melanjutkan')
+                    continue
 
-        tulis_csv(df, 'Pegawai.csv')
-        input('Berhasil! Tekan enter untuk melanjutkan')
+            tulis_csv(df, 'Pegawai.csv')
+            input('Berhasil! Tekan enter untuk melanjutkan')
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
     
 def home_admin():
     while True:
-        os.system('cls')
+        os.system('cls' if os.name == 'nt' else 'clear')
         print(f'''
 ||=====================================||
 ||      SELAMAT DATANG SANG ADMIN      ||
@@ -501,7 +825,19 @@ def tambah_stock_food():
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    id_input = input('Masukkan id barang yang ingin dirubah stok (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan perubahan stok barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
     if id not in df.index:
         input(f'Barang dengan id {id} tidak ditemukan!')
         return
@@ -544,7 +880,18 @@ def tambah_stock_drink():
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    id_input = input('Masukkan id barang yang ingin dirubah stok (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan perubahan stok barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
     if id not in df.index:
         input(f'Barang dengan id {id} tidak ditemukan!')
         return
@@ -587,7 +934,18 @@ def tambah_stock_cosmetik():
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    id_input = input('Masukkan id barang yang ingin dirubah stok (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan perubahan stok barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
     if id not in df.index:
         input(f'Barang dengan id {id} tidak ditemukan!')
         return
@@ -629,7 +987,18 @@ def tambah_stock_shampoo():
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    id_input = input('Masukkan id barang yang ingin dirubah stok (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan perubahan stok barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
     if id not in df.index:
         input(f'Barang dengan id {id} tidak ditemukan!')
         return
@@ -671,7 +1040,19 @@ def tambah_stock_soap():
         tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
 
-    id = int(input('Masukkan id barang yang ingin ditambah stock nya : '))
+    id_input = input('Masukkan id barang yang ingin dirubah stok (atau tekan Enter untuk membatalkan): ')
+
+    if id_input == '':
+        print('Membatalkan perubahan stok barang.')
+        input('tekan enter untuk melanjutkan')
+        return
+
+    try:
+        id = int(id_input)
+    except ValueError:
+        input('ID yang dimasukkan tidak valid! Tekan Enter untuk melanjutkan.')
+        return
+    
     if id not in df.index:
         input(f'Barang dengan id {id} tidak ditemukan!')
         return
@@ -741,185 +1122,6 @@ def home_tambah_stock ():
                 break
             case _ :
                 input ('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
-                
-def ubah_harga_food():
-    os.system('cls')
-    df = baca_csv('Food.csv')
-    print("Daftar semua Makanan:")
-    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
-
-    id = int(input('Masukkan id barang yang ingin diubah harganya: '))
-    if id not in df.index:
-        input(f'Barang dengan id {id} tidak ditemukan!')
-        return
-
-    os.system('cls')
-    print('Mengubah Harga')
-    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-    print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
-    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-    harga_baru = float(input('Masukkan harga baru: '))
-    df.loc[id, 'HARGA'] = harga_baru
-
-    tulis_csv(df, 'Food.csv')
-    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
-
-
-def ubah_harga_drink():
-    os.system('cls')
-    df = baca_csv('drink.csv')
-    print("Daftar semua Minuman:")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
-
-    id = int(input('Masukkan id barang yang ingin diubah harganya: '))
-    if id not in df.index:
-        input(f'Barang dengan id {id} tidak ditemukan!')
-        return
-
-    os.system('cls')
-    print('Mengubah Harga')
-    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-    print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
-    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-    harga_baru = float(input('Masukkan harga baru: '))
-    df.loc[id, 'HARGA'] = harga_baru
-
-    tulis_csv(df, 'drink.csv')
-    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
-
-
-def ubah_harga_cosmetik():
-    os.system('cls')
-    df = baca_csv('cosmetik.csv')
-    print("Daftar semua Kosmetik:")
-    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
-
-    id = int(input('Masukkan id barang yang ingin diubah harganya: '))
-    if id not in df.index:
-        input(f'Barang dengan id {id} tidak ditemukan!')
-        return
-
-    os.system('cls')
-    print('Mengubah Harga')
-    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-    print('[2] Berat        : ' + str(df.loc[id, 'NETTO']))
-    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-    harga_baru = float(input('Masukkan harga baru: '))
-    df.loc[id, 'HARGA'] = harga_baru
-
-    tulis_csv(df, 'cosmetik.csv')
-    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
-
-
-def ubah_harga_shampoo():
-    os.system('cls')
-    df = baca_csv('Shampoo.csv')
-    print("Daftar semua Shampoo:")
-    tabel = [["ID", "Merk", "Netto(ml)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
-
-    id = int(input('Masukkan id barang yang ingin diubah harganya: '))
-    if id not in df.index:
-        input(f'Barang dengan id {id} tidak ditemukan!')
-        return
-
-    os.system('cls')
-    print('Mengubah Harga')
-    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-    print('[2] Berat (ml)   : ' + str(df.loc[id, 'NETTO']))
-    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-    harga_baru = float(input('Masukkan harga baru: '))
-    df.loc[id, 'HARGA'] = harga_baru
-
-    tulis_csv(df, 'Shampoo.csv')
-    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
-
-
-def ubah_harga_soap():
-    os.system('cls')
-    df = baca_csv('Soap.csv')
-    print("Daftar semua Sabun:")
-    tabel = [["ID", "Merk", "Netto(gram)", "Stock", "Harga"]]
-    for i in df.index:
-        tabel.append([i, df.loc[i, 'MEREK'], df.loc[i, 'NETTO'], df.loc[i, 'JML'], df.loc[i, 'HARGA']])
-    print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
-
-    id = int(input('Masukkan id barang yang ingin diubah harganya: '))
-    if id not in df.index:
-        input(f'Barang dengan id {id} tidak ditemukan!')
-        return
-
-    os.system('cls')
-    print('Mengubah Harga')
-    print('[1] Merk         : ' + df.loc[id, 'MEREK'])
-    print('[2] Berat (gram) : ' + str(df.loc[id, 'NETTO']))
-    print('[3] Stok Barang  : ' + str(df.loc[id, 'JML']))
-    print('[4] Harga        : ' + str(df.loc[id, 'HARGA']) + '\n')
-
-    harga_baru = float(input('Masukkan harga baru: '))
-    df.loc[id, 'HARGA'] = harga_baru
-
-    tulis_csv(df, 'Soap.csv')
-    input('Harga berhasil diubah. Tekan enter untuk melanjutkan.')
-
-
-def home_ubah_harga():
-    while True:
-        os.system('cls')
-        print(f'''
-    ||=====================================||
-    ||     SELAMAT DATANG SANG PEGAWAI     ||
-    ||                                     ||
-    ||        Kategori barang Yang         ||
-    ||         Hendak Diubah               ||
-    ||              Harganya :             ||
-    ||                                     ||
-    ||  1. Makanan/Snack                   ||
-    ||  2. Minuman                         ||
-    ||  3. Kecantikan/Kosmetik             ||
-    ||  4. Sabun                           ||
-    ||  5. Sampo                           ||
-    ||  6. Kembali ke Home Page            ||
-    ||                                     ||
-    ||=====================================||            
-    ''')
-        pilih = input('Masukkan opsi yang ingin anda pilih: ')
-        match pilih:
-            case '1':
-                ubah_harga_food()
-            case '2':
-                ubah_harga_drink()
-            case '3':
-                ubah_harga_cosmetik()
-            case '4':
-                ubah_harga_soap()
-            case '5':
-                ubah_harga_shampoo()
-            case '6':
-                break
-            case _:
-                input('Pilih opsi yang telah disediakan. Tekan enter untuk melanjutkan')
-
-
 
 
 # _____________________________________________________________CUSTOMER__________________________________________
