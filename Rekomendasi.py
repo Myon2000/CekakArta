@@ -1158,20 +1158,20 @@ def knapsack_01(items, capacity):
 
 
 def update_stock(nama_file, selected_items):
-    os.system('cls') 
+    os.system('cls')
     df = baca_csv(nama_file)
 
     for item in selected_items:
         index = df[df['MEREK'] == item['name']].index[0]
         df.at[index, 'JML'] -= 1
 
-    tabel = [["Merk", "Netto(gram)", "Stock", "Harga"]]
+    tabel = [["Merk", "Netto(gram)", "Harga"]]
     total_harga = 0
     for item in selected_items:
         index = df[df['MEREK'] == item['name']].index[0]
-        tabel.append([df.loc[index, 'MEREK'], df.loc[index, 'NETTO'], df.loc[index, 'JML'], df.loc[index, 'HARGA']])
+        tabel.append([df.loc[index, 'MEREK'], df.loc[index, 'NETTO'], df.loc[index, 'HARGA']])
         total_harga += df.loc[index, 'HARGA']
-    tabel.append(["", "", "Total Harga", total_harga])
+    tabel.append(["", "Total Harga", total_harga])
     print("Struk Pembayaran : ")
     print(tabulate(tabel, headers="firstrow", tablefmt="fancy_grid"))
     input("Tunjukkan struk ke kasir")
