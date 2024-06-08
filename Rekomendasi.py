@@ -1165,6 +1165,8 @@ def update_stock(nama_file, selected_items):
         index = df[df['MEREK'] == item['name']].index[0]
         df.at[index, 'JML'] -= 1
 
+    df.to_csv(nama_file)
+              
     tabel = [["Merk", "Netto(gram)", "Harga"]]
     total_harga = 0
     for item in selected_items:
@@ -1224,8 +1226,10 @@ def rekomendasi_barang(nama_file, jenis_barang):
         input("Input tidak valid. Tekan Enter untuk kembali.")
         return
 
-    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO']} for index, row in df.iterrows()]
-    items = [item for item in items if item["price"] <= uang_customer and not pd.isnull(item["weight"])]
+    items = [{"name": row['MEREK'], "price": row['HARGA'], "weight": row['NETTO'], 'stok': row['JML']} 
+                 for index, row in df.iterrows() 
+                 if row['JML'] > 0 and row['HARGA'] <= uang_customer and not pd.isnull(row['NETTO'])]
+
 
     if not items:
         print("Tidak ada barang yang dapat dibeli dengan uang tersebut.")
@@ -1252,7 +1256,6 @@ def rekomendasi_barang(nama_file, jenis_barang):
         print(tabulate(table, headers=["Barang", "Harga (Rp)", f"Berat ({unit})"], tablefmt="fancy_grid"))
         print(f"Total harga: {total_price} Rupiah")
         print(f"Total berat: {total_weight} {unit}")
-
         print('''
     ||==================================================||
     ||           [1] Generate Ulang                     ||
@@ -1264,11 +1267,30 @@ def rekomendasi_barang(nama_file, jenis_barang):
 
         match pilih:
             case '1':
+                os.system('cls')
                 continue
             case '2':
-                update_stock(nama_file, selected_items)
-                input("Barang berhasil dibeli. Tekan Enter untuk melanjutkan.")
-                break
+                
+                print('''
+    ||==================================================||
+    ||           Yakin Ingin Membeli?                   ||
+    ||           [1] Ya                                 ||
+    ||           [2] Tidak                              ||
+    ||==================================================||
+''')
+                pilih = input("Masukkan Pilihan Anda : ")
+                match pilih :
+                    case '1' :
+                        update_stock(nama_file, selected_items)
+                        input("Barang berhasil dibeli. Tekan Enter untuk melanjutkan.")
+                        break
+                    case '2' :
+                        print("Membatalkan Pembelian . . .")
+                        input("Tekan enter untuk kembali")
+                        break
+                    case _ :
+                        input("Masukkan sesuai pilihan yang telah di desiakan. Tekan enter untuk melanjutkan")
+
             case '3':
                 break
             case _:
